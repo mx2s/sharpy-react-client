@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
+import {Switch, Route} from "react-router-dom";
+import IndexLayout from "./layouts/IndexLayout";
+//import './styles/css/App.css';
 
 class App extends Component {
     render() {
         return (
-            <div>
-                <p>It works</p>
+            <div className="App">
+                <Switch>
+                    <Route exact path='/' component={IndexLayout}/>
+                </Switch>
             </div>
         );
     }
