@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Switch, Route} from "react-router-dom";
 import IndexLayout from "./layouts/IndexLayout";
-//import './styles/css/App.css';
+import './styles/css/app.css';
 
 class App extends Component {
     render() {

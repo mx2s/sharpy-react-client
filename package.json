@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.6.2",
     "gulp": "^3.9.1",
     "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^4.0.1",
