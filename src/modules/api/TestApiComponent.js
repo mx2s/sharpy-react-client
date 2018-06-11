@@ -1,28 +1,33 @@
 import React from "react";
 import { Button } from "antd";
-import ContentBlock from "../../utils/ContentBlock";
+import ContentBlock from "../../modules/base/ContentBlock";
 
 class TestApiComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            targetHost: "localhost",
-            targetPort: 9026,
-
             isButtonActive: {
                 "test": true
             }
         }
     }
-    componentDidMount() {
-        this.setState({
-            wsClient: new WebSocket("ws://" + this.state.targetHost + ":" + this.state.targetPort  + "/")
-        });
-    }
     sendAPIRequest(type) {
         if (this.state.isButtonActive[type] === true) {
-            this.state.wsClient.send(type);
-            console.log(type);
+            const requestData = JSON.stringify({
+                "type": 1,
+                "data": {
+                  "login": "username",
+                  "pass": "password"
+                }
+            });
+
+            window.apiManager.sendData(0, 1, {
+                "login": "username",
+                "pass": "password"
+            });
+            
+            console.log("Send: " + requestData);
+
             let buttonStates = this.state.isButtonActive;
             buttonStates[type] = false;
             this.setState({
