@@ -1,11 +1,12 @@
 import React from "react";
-import { Button } from "antd";
+import { Row, Col, Button } from "antd";
 import ContentBlock from "../../modules/base/ContentBlock";
 
 class TestApiComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            lastSentRequest: "{}",
             isButtonActive: {
                 "test": true
             }
@@ -21,12 +22,14 @@ class TestApiComponent extends React.Component {
                 }
             });
 
+            this.setState({
+                lastSentRequest: requestData
+            });
+
             window.apiManager.sendData(0, 1, {
                 "login": "username",
                 "pass": "password"
             });
-            
-            console.log("Send: " + requestData);
 
             let buttonStates = this.state.isButtonActive;
             buttonStates[type] = false;
@@ -44,17 +47,22 @@ class TestApiComponent extends React.Component {
     }
     render() {
         return <ContentBlock
-            cardTitle="API test block"
+            cardTitle="API test component"
             content={<div>
-                <Button
-                    type={"primary"}
-                    loading={!this.state.isButtonActive["test"]}
-                    onClick={() => {
-                        this.sendAPIRequest("test")
-                    }}
-                >
-                    Test 1
-                </Button>
+                <Row>
+                    <p>Last request: {this.state.lastSentRequest}</p>
+                </Row>
+                <Row>
+                    <Button
+                        type={"primary"}
+                        loading={!this.state.isButtonActive["test"]}
+                        onClick={() => {
+                            this.sendAPIRequest("test")
+                        }}
+                    >
+                        Test 1
+                    </Button>
+                </Row>
             </div>}
         />;
     }

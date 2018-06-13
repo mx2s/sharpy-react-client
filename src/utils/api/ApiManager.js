@@ -7,15 +7,17 @@ function setUpApiManager() {
                 console.log("RECV: " + event.data);
                 var parsedJson = JSON.parse(event.data);
                 window.eventObserver.publish('command' + parsedJson.command, parsedJson);
+                window.eventObserver.publish('receivedData', parsedJson);
             };
             window.servicesList[serviceId] = newService;
         },
         sendData: function(serviceId, type, data={}) {
-            console.log(window.servicesList);
-            window.servicesList[serviceId].send(JSON.stringify({
+            const jsonToSend = JSON.stringify({
                 "type": type,
                 "data": data
-            }));
+            });
+            console.log("SENT to service " + serviceId + " -> " + jsonToSend); 
+            window.servicesList[serviceId].send(jsonToSend);
         },
         sendAuthData: function(serviceId, type, token, data={}) {
             window.servicesList[serviceId].send(JSON.stringify({

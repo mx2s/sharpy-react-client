@@ -2,14 +2,17 @@ import React from "react";
 import { Row, Col } from "antd";
 import BaseHeader from "../modules/header/BaseHeader";
 import TestApiComponent from "../modules/api/TestApiComponent";
+import ApiLogComponent  from "../modules/api/ApiLogComponent";
 
 class IndexLayout extends React.Component {
     render() {
         return <div>
             <BaseHeader/>
-            <Row className="marginTop25px">
-                <Col xs={0} sm={4} md={6} lg={6} xl={6}/>
-                <Col xs={24} sm={16} md={12} lg={12} xl={12}>
+            <Row gutter={32} className="horizontalMargin15px">
+                <Col className="marginTop25px" xs={24} md={12}>
+                    <ApiLogComponent/>
+                </Col>
+                <Col className="marginTop25px" xs={24} md={12}>
                     <TestApiComponent/>
                 </Col>
             </Row>
