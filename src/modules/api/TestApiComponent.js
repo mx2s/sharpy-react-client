@@ -1,11 +1,19 @@
 import React from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Button, Input } from "antd";
 import ContentBlock from "../../modules/base/ContentBlock";
+const { TextArea } = Input;
 
 class TestApiComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            nextRequest: JSON.stringify({
+                "type": 1,
+                "data": {
+                  "login": "username",
+                  "pass": "password"
+                }
+            }),
             lastSentRequest: "{}",
             isButtonActive: {
                 "test": true
@@ -14,22 +22,13 @@ class TestApiComponent extends React.Component {
     }
     sendAPIRequest(type) {
         if (this.state.isButtonActive[type] === true) {
-            const requestData = JSON.stringify({
-                "type": 1,
-                "data": {
-                  "login": "username",
-                  "pass": "password"
-                }
-            });
-
             this.setState({
-                lastSentRequest: requestData
+                lastSentRequest: this.state.nextRequest
             });
 
-            window.apiManager.sendData(0, 1, {
-                "login": "username",
-                "pass": "password"
-            });
+            const parsedJson = JSON.parse(this.state.nextRequest);
+
+            window.apiManager.sendData(0, parsedJson.type, parsedJson.data);
 
             let buttonStates = this.state.isButtonActive;
             buttonStates[type] = false;
@@ -45,12 +44,25 @@ class TestApiComponent extends React.Component {
             }, 1400);
         }
     }
+    handleInputChange(event) {
+        this.setState({
+            nextRequest: event.target.value
+        });
+    }
     render() {
         return <ContentBlock
             cardTitle="API test component"
             content={<div>
                 <Row>
                     <p>Last request: {this.state.lastSentRequest}</p>
+                </Row>
+                <Row className="verticalMargin15px">
+                    <TextArea 
+                        placeholder="{example json request here}" 
+                        value={this.state.nextRequest}
+                        onChange={this.handleInputChange.bind(this) }
+                        autosize={{ minRows: 2, maxRows: 8 }} 
+                    />
                 </Row>
                 <Row>
                     <Button

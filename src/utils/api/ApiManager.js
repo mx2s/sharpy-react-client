@@ -7,7 +7,10 @@ function setUpApiManager() {
                 console.log("RECV: " + event.data);
                 var parsedJson = JSON.parse(event.data);
                 window.eventObserver.publish('command' + parsedJson.command, parsedJson);
-                window.eventObserver.publish('receivedData', parsedJson);
+                window.eventObserver.publish('gotResponse', parsedJson);
+            };
+            newService.onclose = function(){
+                setTimeout(function(){ window.apiManager.addService(serviceId, host, port); }, 3000);
             };
             window.servicesList[serviceId] = newService;
         },
